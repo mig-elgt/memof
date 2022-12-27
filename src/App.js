@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Flex } from "@chakra-ui/react";
 import Login from "./pages/Login";
+import Memories from "./components/MemoryList";
 
 import './App.css';
 
@@ -19,7 +20,7 @@ function App() {
 	 />
          <Route
 	   path="memories"
-           element=<div>Memories List</div>
+           element=<Memories/>
 	 />
       </Route>
      </Routes>
