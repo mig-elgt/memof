@@ -1,5 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { Flex } from "@chakra-ui/react";
+import Login from "./pages/Login";
+
 import './App.css';
 
 function App() {
@@ -8,11 +11,11 @@ function App() {
      <Routes>
       <Route
 	  path="/"
-	  element=<Outlet/>
+	  element=<Flex><Outlet/></Flex>
       >
          <Route
 	   path="/"
-           element=<div>Login</div>
+           element=<Login/>
 	 />
          <Route
 	   path="memories"
