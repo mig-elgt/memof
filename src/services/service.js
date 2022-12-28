@@ -20,5 +20,5 @@ function internalServerError(err) {
 }
 
 function successStatus(res) {
-   return res.data
+   return res
 }

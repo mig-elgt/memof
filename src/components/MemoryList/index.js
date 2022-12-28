@@ -1,37 +1,55 @@
 import MemoryListItem from "../MemoryListItem";
-import { useEffect, useState } from "react";
+import ValidateKeyAndSendEmail from "../ValidateKeyAndSendEmail";
+import { useEffect, useState, useRef } from "react";
 import { getMemories } from "../../services/service.js";
 import { Button, Stack } from '@chakra-ui/react'
 
 const MemoryList = (props) => {
   const [memories, setMemoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  let refCount = useRef(1);
 
   useEffect(() => {
-    getMemories(1,4,"")
+    getMemories(refCount.current, 4,"")
       .then((resp) => {
-	  setMemoryList(resp.memories)
+	  if (resp.status === 200) {
+	     setMemoryList(resp.data.memories)
+	  }
       })
       .catch((err) => console.log(err))
   }, []);
 
   const onLoadMoreMemories = (e) => {
+    refCount.current++;
     setIsLoading(true)
-    getMemories(2,4,"")
+    getMemories(refCount.current,4,"")
       .then((resp) => {
-	  let newMemories = [...memories]
-	  newMemories.push(...resp.memories)
-	  setMemoryList(newMemories)
+	  console.log(resp)
+	  if (resp.status === 200) {
+	     let newMemories = [...memories]
+	     newMemories.push(...resp.data.memories)
+	     setMemoryList(newMemories)
+	  } else {
+	     setIsModalOpen(true)
+	  }
     	  setIsLoading(false)
       })
       .catch((err) => { 
-    	 setIsLoading(false)
 	 console.log(err)
+    	 setIsLoading(false)
       })
   }
 
+  const handleOnClose = () => {
+    setIsModalOpen(false)
+  };
+ 
+
   return (
     <div>
+      <ValidateKeyAndSendEmail isModalOpen={isModalOpen} handleOnClose={handleOnClose}/>
       {memories.map((memory, i) => {
         return (
           <div key={memory.id}>
