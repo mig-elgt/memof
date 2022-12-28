@@ -10,11 +10,25 @@ const MemoryList = (props) => {
   useEffect(() => {
     getMemories(1,4,"")
       .then((resp) => {
-	  console.log(resp)
 	  setMemoryList(resp.memories)
       })
       .catch((err) => console.log(err))
   }, []);
+
+  const onLoadMoreMemories = (e) => {
+    setIsLoading(true)
+    getMemories(2,4,"")
+      .then((resp) => {
+	  let newMemories = [...memories]
+	  newMemories.push(...resp.memories)
+	  setMemoryList(newMemories)
+    	  setIsLoading(false)
+      })
+      .catch((err) => { 
+    	 setIsLoading(false)
+	 console.log(err)
+      })
+  }
 
   return (
     <div>
@@ -31,8 +45,9 @@ const MemoryList = (props) => {
 	    loadingText='Loading'
 	    colorScheme='teal'
 	    variant='outline'
+	    onClick={onLoadMoreMemories}
 	  >
-	    Load More
+	  Cargar mas
 	  </Button>
 	</Stack>
     </div>
