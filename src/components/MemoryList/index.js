@@ -13,7 +13,7 @@ const MemoryList = (props) => {
   let refCount = useRef(1);
 
   useEffect(() => { 
-    getMemories(refCount.current, 4,publicKey)
+    getMemories(refCount.current, 5,publicKey)
       .then((resp) => {
 	  if (resp.status === 200) {
 	     setMemoryList(resp.data.memories)
@@ -25,7 +25,7 @@ const MemoryList = (props) => {
   const onLoadMoreMemories = (e) => {
     refCount.current++;
     setIsLoading(true)
-    getMemories(refCount.current,4,publicKey)
+    getMemories(refCount.current,5,publicKey)
       .then((resp) => {
 	  console.log(resp)
 	  if (resp.status === 200) {
