@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../services/service";
 import { useNavigate } from "react-router-dom";
-import {FormControl, Input, Button, Wrap, VStack, useToast} from '@chakra-ui/react'
+import { Text, FormControl, Input, Button, Wrap, VStack, useToast} from '@chakra-ui/react'
 
 export default function Login(props) {
   const [form, setForm] = useState({
@@ -43,8 +43,11 @@ export default function Login(props) {
   return (
 	  <Wrap justify='center' px="20px">
 	  <VStack>
+	          <Text fontSize='4xl'>Welcome to Memories</Text>
+	          <Text textAlign='center' fontSize='md'>The online platform to go back to the past and remember your live</Text>
+	          <Text  textAlign='center' fontSize='sm'>Are you ready ? Enter your credentials and take a look your memories with your Chaparrito</Text>
 		  <form onSubmit={handleFormSubmission}>
-		      <FormControl isRequired >
+		      <FormControl isRequired mt={5}>
 			  <Input id="input-username" type='text' mb="15px"
 			  name="username"
 			  placeholder='Username'
@@ -61,10 +64,10 @@ export default function Login(props) {
 			  required
 			  />
 
-		    <Button isLoading={isLogIn} className="button__submit" type="submit" colorScheme='purple'>
-		      Log In
-		    </Button>
-			</FormControl>
+		         <Button mt={5} isLoading={isLogIn} className="button__submit" type="submit" colorScheme='purple'>
+		          Log In
+		         </Button>
+		       </FormControl>
 		  </form>
 	     </VStack>
 	  </Wrap>
