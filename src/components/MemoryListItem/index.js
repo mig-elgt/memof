@@ -12,10 +12,10 @@ const MemoryListItem = (props) => {
 		</Center>
 	     </VStack>
 	     <Stack>
+	        <Text fontSize='sm'>{props.memory.title}</Text>
 	        <Box boxSize='100%'>
                   <Image src={props.memory.image_url} boxSize='100%' />
 	        </Box>
-	        <Text fontSize='sm'>{props.memory.title}</Text>
 	     </Stack>
 	  </Stack>
      </div>
