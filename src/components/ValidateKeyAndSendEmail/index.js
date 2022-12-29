@@ -77,10 +77,10 @@ const ValidateKeyAndSendEmail = (props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Enter your Public Key</ModalHeader>
+          <ModalHeader>Public Key</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-	    <p>In order to give more phothos, you need to enter a Public Key</p>
+	    <p>In order to get more memories, you need to enter your Public Key</p>
 	    <br/>
             <FormControl>
               <FormLabel>Key</FormLabel>
