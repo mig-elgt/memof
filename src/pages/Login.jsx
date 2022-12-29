@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../services/service";
 import { useNavigate } from "react-router-dom";
-import {FormControl, Input, Button, Container, Wrap, VStack, useToast} from '@chakra-ui/react'
-import {ArrowForwardIcon} from '@chakra-ui/icons'
+import {FormControl, Input, Button, Wrap, VStack, useToast} from '@chakra-ui/react'
 
 export default function Login(props) {
   const [form, setForm] = useState({
@@ -10,7 +9,6 @@ export default function Login(props) {
     password: "",
   });
   const { username, password } = form;
-  const [error, setError] = useState(null);
   const [isLogIn, setIsLogIn] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
@@ -31,7 +29,7 @@ export default function Login(props) {
       setIsLogIn(false)
       if (res.status === 403) {
 	toast({ description: 'Invalid Credentials', status: 'error'})
-	return setError({message: "Invalid Credentials"})
+	return
       }
       localStorage.setItem("access_token", res.data.token)
       navigate("/memories");

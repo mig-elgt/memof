@@ -2,7 +2,7 @@ import MemoryListItem from "../MemoryListItem";
 import ValidateKeyAndSendEmail from "../ValidateKeyAndSendEmail";
 import { useEffect, useState, useRef } from "react";
 import { getMemories } from "../../services/service.js";
-import { Button, Stack, VStack, Wrap } from '@chakra-ui/react'
+import { Button, VStack, Wrap } from '@chakra-ui/react'
 
 const MemoryList = (props) => {
   const [memories, setMemoryList] = useState([]);
@@ -70,7 +70,6 @@ const MemoryList = (props) => {
 	    isLoading={isLoading}
 	    loadingText='Loading'
 	    colorScheme='purple'
-	    variant='outline'
 	    onClick={onLoadMoreMemories}
 	  >
 	  Load more
