@@ -15,6 +15,13 @@ export function getMemories(page, limit, publicKey) {
 	.catch(internalServerError)
 }
 
+export function validatePublicKey(key) {
+   api.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("access_token");
+   return api.post("/v1/validate-key", key)
+	.then(successStatus)
+	.catch(internalServerError)
+}
+
 function internalServerError(err) {
    return err.response
 }

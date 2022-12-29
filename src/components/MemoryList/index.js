@@ -8,11 +8,12 @@ const MemoryList = (props) => {
   const [memories, setMemoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [publicKey, setPublicKey] = useState("");
 
   let refCount = useRef(1);
 
-  useEffect(() => {
-    getMemories(refCount.current, 4,"")
+  useEffect(() => { 
+    getMemories(refCount.current, 4,publicKey)
       .then((resp) => {
 	  if (resp.status === 200) {
 	     setMemoryList(resp.data.memories)
@@ -24,7 +25,7 @@ const MemoryList = (props) => {
   const onLoadMoreMemories = (e) => {
     refCount.current++;
     setIsLoading(true)
-    getMemories(refCount.current,4,"")
+    getMemories(refCount.current,4,publicKey)
       .then((resp) => {
 	  console.log(resp)
 	  if (resp.status === 200) {
@@ -45,11 +46,17 @@ const MemoryList = (props) => {
   const handleOnClose = () => {
     setIsModalOpen(false)
   };
+
+  const handlePublicKey = (key) => {
+    console.log("got public key", key)
+    setIsModalOpen(false)
+    setPublicKey(key)
+  };
  
 
   return (
     <div>
-      <ValidateKeyAndSendEmail isModalOpen={isModalOpen} handleOnClose={handleOnClose}/>
+      <ValidateKeyAndSendEmail isModalOpen={isModalOpen} handleOnClose={handleOnClose} handlePublicKey={handlePublicKey}/>
       {memories.map((memory, i) => {
         return (
           <div key={memory.id}>
