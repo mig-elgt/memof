@@ -33,6 +33,7 @@ const MemoryList = (props) => {
 	     newMemories.push(...resp.data.memories)
 	     setMemoryList(newMemories)
 	  } else {
+             refCount.current--;
 	     setIsModalOpen(true)
 	  }
     	  setIsLoading(false)
