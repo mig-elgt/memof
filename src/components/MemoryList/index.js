@@ -2,7 +2,7 @@ import MemoryListItem from "../MemoryListItem";
 import ValidateKeyAndSendEmail from "../ValidateKeyAndSendEmail";
 import { useEffect, useState, useRef } from "react";
 import { getMemories } from "../../services/service.js";
-import { Button, Stack } from '@chakra-ui/react'
+import { Button, Stack, VStack, Wrap } from '@chakra-ui/react'
 
 const MemoryList = (props) => {
   const [memories, setMemoryList] = useState([]);
@@ -57,6 +57,8 @@ const MemoryList = (props) => {
   return (
     <div>
       <ValidateKeyAndSendEmail isModalOpen={isModalOpen} handleOnClose={handleOnClose} handlePublicKey={handlePublicKey}/>
+      <Wrap justify='center'>
+      <VStack >
       {memories.map((memory, i) => {
         return (
           <div key={memory.id}>
@@ -64,17 +66,17 @@ const MemoryList = (props) => {
           </div>
         );
       })}
-	<Stack direction='row' spacing={4}>
 	  <Button
 	    isLoading={isLoading}
 	    loadingText='Loading'
-	    colorScheme='teal'
+	    colorScheme='purple'
 	    variant='outline'
 	    onClick={onLoadMoreMemories}
 	  >
-	  Cargar mas
+	  Load more
 	  </Button>
-	</Stack>
+      </VStack>
+      </Wrap>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const MemoryListItem = (props) => {
 	  <span>{props.memory.date}</span>
 	  <br/>
 	  <span>{props.memory.title}</span>
-	  <Box boxSize='sm'>
+	  <Box boxSize='100%'>
    		<Image src={props.memory.image_url} boxSize='100%' />
           </Box>
      </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../services/service";
 import { useNavigate } from "react-router-dom";
-import {FormControl, Input, Button, Container} from '@chakra-ui/react'
+import {FormControl, Input, Button, Container, Wrap, VStack} from '@chakra-ui/react'
 import {ArrowForwardIcon} from '@chakra-ui/icons'
 
 export default function Login(props) {
@@ -11,6 +11,7 @@ export default function Login(props) {
   });
   const { username, password } = form;
   const [error, setError] = useState(null);
+  const [isLogIn, setIsLogIn] = useState(false);
   const navigate = useNavigate();
 
   function handleInputChange(event) {
@@ -24,44 +25,47 @@ export default function Login(props) {
 	    user: username,
       	    pass: password,
     };
+    setIsLogIn(true)
     login(creds).then((res) => {
+      setIsLogIn(false)
       if (res.status === 403) {
 	return setError({message: "Invalid Credentials"})
       }
-      localStorage.setItem("access_token", res.token)
+      localStorage.setItem("access_token", res.data.token)
       navigate("/memories");
+    }).catch((err) => {
+	console.log(err)
+        setIsLogIn(false)
     });
   }
 
   return (
-<Container maxW='2xl' centerContent>
-          <form onSubmit={handleFormSubmission}>
-              <FormControl isRequired pl="30px" pr="30px">
-                  <Input id="input-username" type='text' mb="15px"
-                  name="username"
-                  placeholder='Username'
-                  value={username}
-                  onChange={handleInputChange}
-                  required/>
-                </FormControl>
-                <FormControl isRequired pl="30px" pr="30px">
-                  <Input id="input-password" type='password' mb="15px"
-                  name="password"
-                  placeholder='Password'
-                  value={password}
-                  onChange={handleInputChange}
-                  required
-                  />
-                </FormControl>
-            {error && (
-              <div className="error-block">
-                <p>{error.message}</p>
-              </div>
-            )}
-            <Button className="button__submit" type="submit" colorScheme='purple'>
-              Entrar
-            </Button>
-          </form>
-</Container>
+	  <Wrap justify='center' px="20px">
+	  <VStack>
+		  <form onSubmit={handleFormSubmission}>
+		      <FormControl isRequired >
+			  <Input id="input-username" type='text' mb="15px"
+			  name="username"
+			  placeholder='Username'
+			  value={username}
+			  onChange={handleInputChange}
+			  required/>
+			</FormControl>
+			<FormControl isRequired>
+			  <Input id="input-password" type='password' mb="15px"
+			  name="password"
+			  placeholder='Password'
+			  value={password}
+			  onChange={handleInputChange}
+			  required
+			  />
+
+		    <Button isLoading={isLogIn} className="button__submit" type="submit" colorScheme='purple'>
+		      Log In
+		    </Button>
+			</FormControl>
+		  </form>
+	     </VStack>
+	  </Wrap>
   );
 }
