@@ -13,7 +13,7 @@ import {
   Button,
   useDisclosure,
 } from '@chakra-ui/react'
-import { validatePublicKey } from "../../services/service.js";
+import { validatePublicKey, sendEmail } from "../../services/service.js";
 
 const ValidateKeyAndSendEmail = (props) => {
   const initialRef = React.useRef(null)
@@ -23,6 +23,9 @@ const ValidateKeyAndSendEmail = (props) => {
     email: "",
   });
   const [validateKeyError, setValidateKeyError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [isValidateLoading, setIsValidateLoading] = useState(false);
+  const [isEmailSending, setIsEmailSending] = useState(false);
   const { publicKey, email } = form;
   
   const handleInputChange = (event) => {
@@ -31,21 +34,34 @@ const ValidateKeyAndSendEmail = (props) => {
   }
   
   const handleValidatePublicKey = () => {
-    console.log("validate public key")
-    console.log(publicKey)
+    setIsValidateLoading(true)
     validatePublicKey({key: publicKey})
        .then((resp) => {
-	  if (resp.status == 403) {
+	  setIsValidateLoading(false)
+	  if (resp.status === 403) {
 	     return setValidateKeyError({message: "Invalid Public Key"})
 	  }
 	  props.handlePublicKey(resp.data.public_key)
        })
-       .catch((err) => console.log(err))
+       .catch((err) => {
+	  console.log(err)
+	  setIsValidateLoading(false)
+       })
   }
 
   const handleSendEmail = () => {
-    console.log("send email")
-    console.log(email)
+    setIsEmailSending(true)
+    sendEmail({email: email})
+       .then((resp) => {
+	  setIsEmailSending(false)
+	  if (resp.status !== 200) {
+	     return setEmailError({message: "Failed to send email"})
+	  }
+       })
+       .catch((err) => {
+    	  setIsEmailSending(false)
+	  console.log(err)
+       })
   }
 
   return (
@@ -73,13 +89,18 @@ const ValidateKeyAndSendEmail = (props) => {
             )}
             </FormControl>
 	    <br/>
-            <Button onClick={handleValidatePublicKey}>Validate</Button>
+            <Button isLoading={isValidateLoading} loadingText='Validating' variant='outline' onClick={handleValidatePublicKey}>Validate</Button>
             <FormControl mt={4}>
               <FormLabel>Forgot your Public Key?</FormLabel>
-              <Input name="email" value={email} onChange={handleInputChange} placeholder='email' />
+              <Input name="email" value={email} onChange={handleInputChange} placeholder='email' required />
+            {emailError && (
+              <div className="error-block">
+                <p>{validateKeyError.message}</p>
+              </div>
+            )}
             </FormControl>
 	    <br/>
-            <Button onClick={handleSendEmail}>Send</Button>
+            <Button isLoading={isEmailSending} loadingText='Sending' variant='outline' onClick={handleSendEmail}>Send</Button>
           </ModalBody>
           <ModalFooter>
             <Button onClick={props.handleOnClose}>Cancel</Button>

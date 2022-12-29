@@ -22,6 +22,13 @@ export function validatePublicKey(key) {
 	.catch(internalServerError)
 }
 
+export function sendEmail(email) {
+   api.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("access_token");
+   return api.post("/v1/send-question", email)
+	.then(successStatus)
+	.catch(internalServerError)
+}
+
 function internalServerError(err) {
    return err.response
 }
