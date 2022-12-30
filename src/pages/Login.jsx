@@ -44,7 +44,7 @@ export default function Login(props) {
 	  <Wrap justify='center' px="20px">
 	  <VStack>
 	          <Text textAlign='center' fontSize='4xl'>Welcome to Memories</Text>
-	          <Text textAlign='center' fontSize='md'>The online platform to go back to the past and remember your live</Text>
+	          <Text textAlign='center' fontSize='md'>The online platform to go back to the past and remember your life</Text>
 	          <Text  textAlign='center' fontSize='sm'>Are you ready ? Enter your credentials and take a look your memories with your Chaparrito</Text>
 		  <form onSubmit={handleFormSubmission}>
 		      <FormControl isRequired mt={5}>
