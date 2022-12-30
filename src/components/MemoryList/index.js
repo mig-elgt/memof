@@ -3,16 +3,22 @@ import ValidateKeyAndSendEmail from "../ValidateKeyAndSendEmail";
 import { useEffect, useState, useRef } from "react";
 import { getMemories } from "../../services/service.js";
 import { Button, VStack, Wrap, Text, Icon } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom";
 
 const MemoryList = (props) => {
   const [memories, setMemoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [publicKey, setPublicKey] = useState("");
+  const navigate = useNavigate();
 
   let refCount = useRef(1);
 
   useEffect(() => { 
+    if (localStorage.getItem("access_token") === null) {
+      navigate("/");
+      return
+    }
     getMemories(refCount.current, 4,publicKey)
       .then((resp) => {
 	  if (resp.status === 200) {
