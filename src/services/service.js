@@ -5,34 +5,43 @@ const api = axios.create({
 });
 
 export function login(creds) {
-  return api.post("/auth", creds).then(successStatus).catch(internalServerError);
+  return api
+    .post("/auth", creds)
+    .then(successStatus)
+    .catch(internalServerError);
 }
 
 export function getMemories(page, limit, publicKey) {
-   api.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("access_token");
-   return api.get(`/v1/memories?page=${page}&limit=${limit}&pk=${publicKey}`)
-	.then(successStatus)
-	.catch(internalServerError)
+  api.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem("access_token");
+  return api
+    .get(`/v1/memories?page=${page}&limit=${limit}&pk=${publicKey}`)
+    .then(successStatus)
+    .catch(internalServerError);
 }
 
 export function validatePublicKey(key) {
-   api.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("access_token");
-   return api.post("/v1/validate-key", key)
-	.then(successStatus)
-	.catch(internalServerError)
+  api.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem("access_token");
+  return api
+    .post("/v1/validate-key", key)
+    .then(successStatus)
+    .catch(internalServerError);
 }
 
 export function sendEmail(email) {
-   api.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("access_token");
-   return api.post("/v1/send-question", email)
-	.then(successStatus)
-	.catch(internalServerError)
+  api.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem("access_token");
+  return api
+    .post("/v1/send-question", email)
+    .then(successStatus)
+    .catch(internalServerError);
 }
 
 function internalServerError(err) {
-   return err.response
+  return err.response;
 }
 
 function successStatus(res) {
-   return res
+  return res;
 }
