@@ -39,12 +39,11 @@ const MemoryListItem = (props) => {
                   {props.memory.title}
                 </Text>
               </Box>
-			  <Box boxSize="100%">
-              <Image src={props.memory.image_url} boxSize="100%" />
-            </Box>
+              <Box boxSize="100%">
+                <Image src={props.memory.image_url} boxSize="100%" />
+              </Box>
             </CardHeader>
           </Card>
-         
         </Box>
       </Stack>
     </div>
